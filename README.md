@@ -12,13 +12,29 @@ npm install -g @bimo-dk/nexus-cli
 
 | Command | Description |
 |---|---|
-| `bnx generate remote` | Scaffold a new remote (interactive prompts) |
-| `bnx publish` | Register the current remote with the registry |
+| `bnx init` | Bootstrap a workspace: write `nexus.config.json` (multi-environment) + `.env.example`, optionally scaffold a host |
+| `bnx generate host` | Scaffold a new host app (Angular, Vue, or React) |
+| `bnx generate remote` | Scaffold a new remote app |
+| `bnx generate component <Name>` | Add a `defineNexusComponent`-annotated file to the current remote (auto-detects framework) |
+| `bnx publish` | Register the current remote with the registry and report `dist/catalog.json` entry count |
 | `bnx status` | Table of all remotes |
 | `bnx health` | Health check all remotes with response times |
-| `bnx dev` | Start local dev environment (proxy + autostart configured remotes) |
+| `bnx dev` | Start local dev environment (proxy + autostart configured remotes) — `--env <name>` picks which gateway stack |
 | `bnx dev status` | Show which configured remotes are running locally |
 | `bnx --version` | Version |
+
+### Multiple gateway stacks
+
+A workspace can target several gateway stacks (local docker-compose, staging,
+prod). `nexus.config.json` keeps every stack under `environments`, and
+`bnx dev --env <name>` picks which one each `bnx dev` run talks to. Default
+is `dev.baseEnv`.
+
+```bash
+bnx dev               # uses dev.baseEnv from nexus.config.json
+bnx dev --env local   # work against http://localhost:8668 (docker-compose)
+bnx dev --env prod    # work against https://nexus.bimo.dk
+```
 
 ## Local dev workflow (`bnx dev`)
 

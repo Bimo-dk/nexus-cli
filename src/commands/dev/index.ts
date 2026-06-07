@@ -7,12 +7,20 @@ import { startProxyServer } from './proxy-server.js';
 export interface DevCommandOptions {
   config?: string;
   port?: number;
+  env?: string;
   noOpen?: boolean;
   noAutostart?: boolean;
 }
 
 export async function devCommand(opts: DevCommandOptions = {}): Promise<void> {
   const { config: cfg, path: cfgPath } = await loadConfig(opts.config);
+  if (opts.env) {
+    if (!cfg.environments[opts.env]) {
+      const known = Object.keys(cfg.environments).join(', ') || '(none)';
+      throw new Error(`[bnx dev] --env "${opts.env}" is not in nexus.config.json. Known: ${known}`);
+    }
+    cfg.dev.baseEnv = opts.env;
+  }
   const env = resolveEnvironment(cfg);
   const proxyPort = opts.port ?? cfg.dev.proxyPort ?? 9000;
 
