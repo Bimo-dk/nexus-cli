@@ -2,7 +2,8 @@
   "name": "@bimo-dk/nexus-cli",
   "version": "0.2.0",
   "description": "bnx — Bimo-Nexus kommandolinje-vaerktoej til generate, publish, status, health, dev",
-  "license": "MIT",
+  "license": "AGPL-3.0-or-later",
+  "author": "Steffen Vitten Pedersen <svp@bimo.dk>",
   "repository": {
     "type": "git",
     "url": "https://github.com/Bimo-dk/nexus-cli.git"
